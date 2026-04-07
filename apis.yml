@@ -1,7 +1,12 @@
 aid: synchrony-financial
-url: https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.synchrony-financial.com
+description: >-
+  Synchrony Financial is one of the nation's premier consumer financial services companies,
+  providing a range of credit products through programs established with retailers,
+  manufacturers, and merchants.
