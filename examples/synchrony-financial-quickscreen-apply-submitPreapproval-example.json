@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/credit/preapproval",
+    "headers": {
+      "Authorization": "Bearer {ACCESS_TOKEN}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "merchantId": "MER-12345",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "address": {
+        "street": "456 Oak Avenue",
+        "city": "Austin",
+        "state": "TX",
+        "zipCode": "78701",
+        "country": "US"
+      },
+      "channel": "web"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "offerId": "OFFER-2026-78432",
+      "decision": "preapproved",
+      "creditLimit": 3000.00,
+      "expiresAt": "2026-05-17T00:00:00Z",
+      "message": "Pre-approved for up to $3,000 credit line"
+    }
+  }
+}

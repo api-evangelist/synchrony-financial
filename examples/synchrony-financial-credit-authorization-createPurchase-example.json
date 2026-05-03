@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/authorizations/purchases",
+    "headers": {
+      "Authorization": "Bearer {ACCESS_TOKEN}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "merchantId": "MER-12345",
+      "accountNumber": "6012345678901234",
+      "amount": 249.99,
+      "channel": "web",
+      "merchantOrderId": "ORD-2026-00891"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "transactionId": "TXN-20260503-00041827",
+      "authorizationCode": "AUTH-789012",
+      "status": "approved",
+      "amount": 249.99,
+      "accountNumber": "XXXXXXXXXXXX1234",
+      "timestamp": "2026-05-03T14:32:10Z",
+      "message": "Transaction approved"
+    }
+  }
+}

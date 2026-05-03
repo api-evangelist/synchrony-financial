@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.syf.com/schemas/credit-application",
+  "title": "Credit Application",
+  "description": "A Synchrony Financial credit card application submitted for instant decisioning.",
+  "type": "object",
+  "properties": {
+    "applicationId": {
+      "type": "string",
+      "description": "Unique application identifier."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["approved", "declined", "pending"],
+      "description": "Credit decision outcome."
+    },
+    "creditLimit": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Approved credit limit in USD."
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "Masked account number issued on approval."
+    },
+    "merchantId": {
+      "type": "string",
+      "description": "Originating merchant identifier."
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" }
+      },
+      "required": ["firstName", "lastName"]
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["web", "mobile"],
+      "description": "Application submission channel."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["applicationId", "decision", "merchantId", "timestamp"]
+}

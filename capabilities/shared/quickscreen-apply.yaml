@@ -1,0 +1,172 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Synchrony Financial Quickscreen Apply API"
+  description: "Credit preapproval and application submission using Synchrony's Quickscreen instant decisioning engine."
+  tags:
+    - Credit Application
+    - Preapproval
+    - Consumer Finance
+    - Retail Finance
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      SYNCHRONY_API_TOKEN: SYNCHRONY_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: synchrony-quickscreen
+      baseUri: https://api.syf.com
+      description: "Synchrony Financial Quickscreen preapproval and credit application API."
+      authentication:
+        type: bearer
+        token: "{{SYNCHRONY_API_TOKEN}}"
+      resources:
+        - name: preapprovals
+          path: /v1/credit/preapproval
+          description: "Soft-pull preapproval operations."
+          operations:
+            - name: submit-preapproval
+              method: POST
+              description: "Submits a soft-pull preapproval check using customer name and address."
+              inputParameters:
+                - name: merchantId
+                  in: body
+                  type: string
+                  required: true
+                - name: firstName
+                  in: body
+                  type: string
+                  required: true
+                - name: lastName
+                  in: body
+                  type: string
+                  required: true
+                - name: zipCode
+                  in: body
+                  type: string
+                  required: true
+                - name: channel
+                  in: body
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  merchantId: "{{tools.merchantId}}"
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+                  address:
+                    zipCode: "{{tools.zipCode}}"
+
+        - name: applications
+          path: /v1/credit/applications
+          description: "Full credit card application submissions."
+          operations:
+            - name: submit-application
+              method: POST
+              description: "Submits a full credit card application for instant decision."
+              inputParameters:
+                - name: merchantId
+                  in: body
+                  type: string
+                  required: true
+                - name: offerId
+                  in: body
+                  type: string
+                  required: false
+                  description: "Pre-filled offer ID from Quickscreen if available."
+                - name: firstName
+                  in: body
+                  type: string
+                  required: true
+                - name: lastName
+                  in: body
+                  type: string
+                  required: true
+                - name: channel
+                  in: body
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  merchantId: "{{tools.merchantId}}"
+                  offerId: "{{tools.offerId}}"
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+
+        - name: decisions
+          path: /v1/credit/applications/{applicationId}
+          description: "Application decision retrieval."
+          operations:
+            - name: get-application-decision
+              method: GET
+              description: "Retrieves the decision for a submitted credit application."
+              inputParameters:
+                - name: applicationId
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: synchrony-quickscreen-api
+      resources:
+        - path: /v1/preapprovals
+          name: preapprovals
+          operations:
+            - method: POST
+              name: submit-preapproval
+              call: "synchrony-quickscreen.submit-preapproval"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: synchrony-quickscreen-mcp
+      transport: http
+      tools:
+        - name: submit-preapproval
+          description: "Run a soft-pull credit preapproval check using customer name and address."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "synchrony-quickscreen.submit-preapproval"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-application-decision
+          description: "Retrieve the credit application decision by application ID."
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "synchrony-quickscreen.get-application-decision"
+          with:
+            applicationId: "tools.applicationId"
+          outputParameters:
+            - type: object
+              mapping: "$."

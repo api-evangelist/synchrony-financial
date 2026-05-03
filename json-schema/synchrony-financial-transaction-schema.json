@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.syf.com/schemas/transaction",
+  "title": "Transaction",
+  "description": "A Synchrony Financial credit transaction including purchases, payments, refunds, and reversals.",
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Unique identifier for the transaction."
+    },
+    "authorizationCode": {
+      "type": "string",
+      "description": "Authorization code returned on approval."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["approved", "declined", "pending", "reversed"],
+      "description": "Current transaction status."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["purchase", "preauthorization", "completion", "payment", "refund", "reversal"],
+      "description": "Transaction type."
+    },
+    "amount": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "description": "Transaction amount in USD."
+    },
+    "merchantId": {
+      "type": "string",
+      "description": "Synchrony merchant identifier."
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "Masked credit account number."
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["web", "mobile", "pos"],
+      "description": "Transaction channel."
+    },
+    "merchantOrderId": {
+      "type": "string",
+      "description": "Merchant internal order reference."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Transaction timestamp in ISO 8601 format."
+    },
+    "message": {
+      "type": "string",
+      "description": "Human-readable status message."
+    }
+  },
+  "required": ["transactionId", "status", "type", "amount", "merchantId", "timestamp"]
+}

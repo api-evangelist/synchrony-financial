@@ -1,0 +1,17 @@
+{
+  "name": "Transaction",
+  "description": "Synchrony Financial credit transaction structure.",
+  "fields": [
+    { "name": "transactionId", "type": "string", "required": true, "description": "Unique transaction identifier." },
+    { "name": "authorizationCode", "type": "string", "required": false, "description": "Auth code on approval." },
+    { "name": "status", "type": "enum", "required": true, "values": ["approved", "declined", "pending", "reversed"] },
+    { "name": "type", "type": "enum", "required": true, "values": ["purchase", "preauthorization", "completion", "payment", "refund", "reversal"] },
+    { "name": "amount", "type": "number", "required": true, "description": "Transaction amount in USD." },
+    { "name": "merchantId", "type": "string", "required": true },
+    { "name": "accountNumber", "type": "string", "required": false, "description": "Masked account number." },
+    { "name": "channel", "type": "enum", "required": false, "values": ["web", "mobile", "pos"] },
+    { "name": "merchantOrderId", "type": "string", "required": false },
+    { "name": "timestamp", "type": "date-time", "required": true },
+    { "name": "message", "type": "string", "required": false }
+  ]
+}

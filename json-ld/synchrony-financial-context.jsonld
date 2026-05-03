@@ -1,0 +1,38 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "syf": "https://developer.syf.com/vocab/",
+    "Transaction": "syf:Transaction",
+    "CreditApplication": "syf:CreditApplication",
+    "PreapprovalOffer": "syf:PreapprovalOffer",
+    "transactionId": "syf:transactionId",
+    "authorizationCode": "syf:authorizationCode",
+    "merchantId": "syf:merchantId",
+    "accountNumber": "syf:accountNumber",
+    "transactionStatus": "syf:transactionStatus",
+    "transactionType": "syf:transactionType",
+    "channel": "syf:channel",
+    "merchantOrderId": "syf:merchantOrderId",
+    "applicationId": "syf:applicationId",
+    "creditLimit": "syf:creditLimit",
+    "offerId": "syf:offerId",
+    "preapprovalDecision": "syf:preapprovalDecision",
+    "amount": {
+      "@id": "schema:price",
+      "@type": "schema:Number"
+    },
+    "timestamp": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    },
+    "firstName": "schema:givenName",
+    "lastName": "schema:familyName",
+    "email": "schema:email",
+    "phone": "schema:telephone",
+    "street": "schema:streetAddress",
+    "city": "schema:addressLocality",
+    "state": "schema:addressRegion",
+    "zipCode": "schema:postalCode",
+    "country": "schema:addressCountry"
+  }
+}

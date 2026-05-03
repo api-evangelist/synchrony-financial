@@ -1,0 +1,111 @@
+vocabulary:
+  name: Synchrony Financial API Vocabulary
+  description: >-
+    Vocabulary for Synchrony Financial's consumer credit and financial services APIs,
+    covering credit authorization, preapproval, application processing, and payments.
+  version: '1.0'
+  created: '2026-05-03'
+  terms:
+    - term: Credit Authorization
+      definition: >-
+        The process of approving or declining a credit card transaction by checking
+        available credit on the cardholder's Synchrony account.
+      tags:
+        - Authorization
+        - Credit
+        - Transaction
+
+    - term: Preauthorization
+      definition: >-
+        A temporary hold placed on a customer's credit account for a specified amount
+        without capturing the funds, used when the final transaction amount is unknown.
+      tags:
+        - Authorization
+        - Hold
+        - Transaction
+
+    - term: Completion
+      definition: >-
+        The capture of funds against a previously placed preauthorization hold, using
+        the original authorization code to finalize the transaction.
+      tags:
+        - Capture
+        - Transaction
+        - Completion
+
+    - term: Reversal
+      definition: >-
+        The cancellation or voiding of a prior transaction before settlement occurs,
+        releasing any held funds back to the customer's available credit.
+      tags:
+        - Void
+        - Cancellation
+        - Transaction
+
+    - term: Quickscreen
+      definition: >-
+        Synchrony's proprietary soft-pull preapproval engine that uses name and address
+        to return real-time credit decisions without impacting the customer's credit score.
+      tags:
+        - Preapproval
+        - Credit Decision
+        - Soft Pull
+
+    - term: Payment Token
+      definition: >-
+        A tokenized representation of a credit account number used in place of the
+        actual account number for secure transaction processing.
+      tags:
+        - Security
+        - Tokenization
+        - Payments
+
+    - term: mApply
+      definition: >-
+        Synchrony's mobile credit application experience allowing customers to securely
+        apply for credit on mobile devices and instantly access their approved credit line.
+      tags:
+        - Mobile
+        - Credit Application
+        - Digital
+
+    - term: Credit Limit
+      definition: >-
+        The maximum amount of credit extended to a cardholder on their Synchrony account,
+        set at time of application approval.
+      tags:
+        - Credit
+        - Account Management
+        - Finance
+
+    - term: Merchant ID
+      definition: >-
+        The unique identifier assigned to a retailer or merchant by Synchrony Financial
+        for processing credit transactions through the Synchrony network.
+      tags:
+        - Merchant
+        - Identity
+        - Partner
+
+    - term: Channel
+      definition: >-
+        The transaction submission channel indicating whether the transaction originated
+        from a web interface, mobile application, or point-of-sale terminal.
+      tags:
+        - Transaction
+        - Channel
+        - Digital Commerce
+
+  dimensions:
+    operational:
+      - Purchase Authorization
+      - Refund Processing
+      - Preapproval Decisioning
+      - Credit Application
+      - Account Management
+    capability:
+      - Retail Credit Integration
+      - Mobile Commerce
+      - Point of Sale Credit
+      - Buy Now Pay Later
+      - Consumer Financing
