@@ -1,291 +1,581 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Synchrony Financial Retail Credit"
-  description: >-
-    Unified retail credit capability combining Synchrony's credit authorization
-    and Quickscreen preapproval APIs. Enables merchants to offer instant credit
-    decisions, process purchases on credit, handle payments, and manage refunds
+  label: Synchrony Financial Retail Credit
+  description: Unified retail credit capability combining Synchrony's credit authorization and Quickscreen preapproval APIs.
+    Enables merchants to offer instant credit decisions, process purchases on credit, handle payments, and manage refunds
     and reversals across web, mobile, and point-of-sale channels.
   tags:
-    - Synchrony Financial
-    - Retail Credit
-    - Credit Authorization
-    - Consumer Finance
-    - Payments
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - Synchrony Financial
+  - Retail Credit
+  - Credit Authorization
+  - Consumer Finance
+  - Payments
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      SYNCHRONY_API_TOKEN: SYNCHRONY_API_TOKEN
-
+- namespace: env
+  keys:
+    SYNCHRONY_API_TOKEN: SYNCHRONY_API_TOKEN
 capability:
   consumes:
-    - import: synchrony-credit-auth
-      location: ./shared/credit-authorization.yaml
-    - import: synchrony-quickscreen
-      location: ./shared/quickscreen-apply.yaml
-
+  - type: http
+    namespace: synchrony-credit-auth
+    baseUri: https://api.syf.com
+    description: Synchrony Financial Credit Authorization API for processing retail credit transactions.
+    authentication:
+      type: bearer
+      token: '{{SYNCHRONY_API_TOKEN}}'
+    resources:
+    - name: purchases
+      path: /v1/authorizations/purchases
+      description: Purchase authorization transactions.
+      operations:
+      - name: create-purchase
+        method: POST
+        description: Initiates a purchase transaction against a Synchrony credit account.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+          description: Merchant Synchrony identifier.
+        - name: accountNumber
+          in: body
+          type: string
+          required: true
+          description: Customer credit account number or payment token.
+        - name: amount
+          in: body
+          type: number
+          required: true
+          description: Transaction amount in dollars.
+        - name: channel
+          in: body
+          type: string
+          required: false
+          description: 'Transaction channel: web, mobile, or pos.'
+        - name: merchantOrderId
+          in: body
+          type: string
+          required: false
+          description: Merchant internal order reference.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            accountNumber: '{{tools.accountNumber}}'
+            amount: '{{tools.amount}}'
+            channel: '{{tools.channel}}'
+            merchantOrderId: '{{tools.merchantOrderId}}'
+    - name: preauthorizations
+      path: /v1/authorizations/preauthorizations
+      description: Preauthorization hold operations.
+      operations:
+      - name: create-preauthorization
+        method: POST
+        description: Places an authorization hold on a customer's credit account.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+          description: Merchant identifier.
+        - name: accountNumber
+          in: body
+          type: string
+          required: true
+          description: Credit account number or payment token.
+        - name: amount
+          in: body
+          type: number
+          required: true
+          description: Hold amount in dollars.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            accountNumber: '{{tools.accountNumber}}'
+            amount: '{{tools.amount}}'
+    - name: completions
+      path: /v1/authorizations/completions
+      description: Complete prior preauthorizations.
+      operations:
+      - name: create-completion
+        method: POST
+        description: Completes a prior preauthorization by capturing the final transaction amount.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: authorizationCode
+          in: body
+          type: string
+          required: true
+          description: Original preauthorization code.
+        - name: amount
+          in: body
+          type: number
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            authorizationCode: '{{tools.authorizationCode}}'
+            amount: '{{tools.amount}}'
+    - name: payments
+      path: /v1/authorizations/payments
+      description: Account payment operations.
+      operations:
+      - name: create-payment
+        method: POST
+        description: Processes a payment to a customer's Synchrony credit account.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: accountNumber
+          in: body
+          type: string
+          required: true
+        - name: amount
+          in: body
+          type: number
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            accountNumber: '{{tools.accountNumber}}'
+            amount: '{{tools.amount}}'
+    - name: refunds
+      path: /v1/authorizations/refunds
+      description: Refund credit operations.
+      operations:
+      - name: create-refund
+        method: POST
+        description: Processes a refund to a customer's Synchrony credit account.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: originalTransactionId
+          in: body
+          type: string
+          required: true
+        - name: amount
+          in: body
+          type: number
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            originalTransactionId: '{{tools.originalTransactionId}}'
+            amount: '{{tools.amount}}'
+    - name: reversals
+      path: /v1/authorizations/reversals
+      description: Transaction reversal operations.
+      operations:
+      - name: create-reversal
+        method: POST
+        description: Voids or reverses a prior transaction.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: originalTransactionId
+          in: body
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            originalTransactionId: '{{tools.originalTransactionId}}'
+  - type: http
+    namespace: synchrony-quickscreen
+    baseUri: https://api.syf.com
+    description: Synchrony Financial Quickscreen preapproval and credit application API.
+    authentication:
+      type: bearer
+      token: '{{SYNCHRONY_API_TOKEN}}'
+    resources:
+    - name: preapprovals
+      path: /v1/credit/preapproval
+      description: Soft-pull preapproval operations.
+      operations:
+      - name: submit-preapproval
+        method: POST
+        description: Submits a soft-pull preapproval check using customer name and address.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: firstName
+          in: body
+          type: string
+          required: true
+        - name: lastName
+          in: body
+          type: string
+          required: true
+        - name: zipCode
+          in: body
+          type: string
+          required: true
+        - name: channel
+          in: body
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            firstName: '{{tools.firstName}}'
+            lastName: '{{tools.lastName}}'
+            address:
+              zipCode: '{{tools.zipCode}}'
+    - name: applications
+      path: /v1/credit/applications
+      description: Full credit card application submissions.
+      operations:
+      - name: submit-application
+        method: POST
+        description: Submits a full credit card application for instant decision.
+        inputParameters:
+        - name: merchantId
+          in: body
+          type: string
+          required: true
+        - name: offerId
+          in: body
+          type: string
+          required: false
+          description: Pre-filled offer ID from Quickscreen if available.
+        - name: firstName
+          in: body
+          type: string
+          required: true
+        - name: lastName
+          in: body
+          type: string
+          required: true
+        - name: channel
+          in: body
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            merchantId: '{{tools.merchantId}}'
+            offerId: '{{tools.offerId}}'
+            firstName: '{{tools.firstName}}'
+            lastName: '{{tools.lastName}}'
+    - name: decisions
+      path: /v1/credit/applications/{applicationId}
+      description: Application decision retrieval.
+      operations:
+      - name: get-application-decision
+        method: GET
+        description: Retrieves the decision for a submitted credit application.
+        inputParameters:
+        - name: applicationId
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: synchrony-retail-credit-api
-      description: "Unified REST API for Synchrony retail credit operations."
-      resources:
-        - path: /v1/preapprovals
-          name: preapprovals
-          description: "Soft-pull credit preapproval checks."
-          operations:
-            - method: POST
-              name: submit-preapproval
-              description: "Run a Quickscreen preapproval to offer instant credit to a customer."
-              call: "synchrony-quickscreen.submit-preapproval"
-              with:
-                merchantId: "rest.merchantId"
-                firstName: "rest.firstName"
-                lastName: "rest.lastName"
-                zipCode: "rest.zipCode"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/applications
-          name: applications
-          description: "Full credit card application submissions."
-          operations:
-            - method: POST
-              name: submit-application
-              description: "Submit a full credit card application for instant decision."
-              call: "synchrony-quickscreen.submit-application"
-              with:
-                merchantId: "rest.merchantId"
-                offerId: "rest.offerId"
-                firstName: "rest.firstName"
-                lastName: "rest.lastName"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/applications/{applicationId}
-          name: application-decision
-          description: "Credit application decisions."
-          operations:
-            - method: GET
-              name: get-application-decision
-              description: "Retrieve the decision for a submitted credit application."
-              call: "synchrony-quickscreen.get-application-decision"
-              with:
-                applicationId: "rest.applicationId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/purchases
-          name: purchases
-          description: "Credit purchase authorizations."
-          operations:
-            - method: POST
-              name: create-purchase
-              description: "Authorize a purchase transaction on a Synchrony credit account."
-              call: "synchrony-credit-auth.create-purchase"
-              with:
-                merchantId: "rest.merchantId"
-                accountNumber: "rest.accountNumber"
-                amount: "rest.amount"
-                channel: "rest.channel"
-                merchantOrderId: "rest.merchantOrderId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/preauthorizations
-          name: preauthorizations
-          description: "Credit hold preauthorizations."
-          operations:
-            - method: POST
-              name: create-preauthorization
-              description: "Place an authorization hold on a Synchrony credit account."
-              call: "synchrony-credit-auth.create-preauthorization"
-              with:
-                merchantId: "rest.merchantId"
-                accountNumber: "rest.accountNumber"
-                amount: "rest.amount"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/payments
-          name: payments
-          description: "Credit account payments."
-          operations:
-            - method: POST
-              name: create-payment
-              description: "Process a payment to a customer's Synchrony credit account."
-              call: "synchrony-credit-auth.create-payment"
-              with:
-                merchantId: "rest.merchantId"
-                accountNumber: "rest.accountNumber"
-                amount: "rest.amount"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/refunds
-          name: refunds
-          description: "Credit transaction refunds."
-          operations:
-            - method: POST
-              name: create-refund
-              description: "Process a refund to a customer's Synchrony credit account."
-              call: "synchrony-credit-auth.create-refund"
-              with:
-                merchantId: "rest.merchantId"
-                originalTransactionId: "rest.originalTransactionId"
-                amount: "rest.amount"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/reversals
-          name: reversals
-          description: "Transaction reversals and voids."
-          operations:
-            - method: POST
-              name: create-reversal
-              description: "Reverse or void a prior Synchrony credit transaction."
-              call: "synchrony-credit-auth.create-reversal"
-              with:
-                merchantId: "rest.merchantId"
-                originalTransactionId: "rest.originalTransactionId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: synchrony-retail-credit-mcp
-      transport: http
-      description: "MCP server for AI-assisted retail credit management using Synchrony Financial APIs."
-      tools:
-        - name: submit-credit-preapproval
-          description: "Run a soft-pull Quickscreen preapproval to instantly offer credit to a customer by name and address."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-quickscreen.submit-preapproval"
-          with:
-            merchantId: "tools.merchantId"
-            firstName: "tools.firstName"
-            lastName: "tools.lastName"
-            zipCode: "tools.zipCode"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: submit-credit-application
-          description: "Submit a full Synchrony credit card application for an instant credit decision."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-quickscreen.submit-application"
-          with:
-            merchantId: "tools.merchantId"
-            offerId: "tools.offerId"
-            firstName: "tools.firstName"
-            lastName: "tools.lastName"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-application-decision
-          description: "Retrieve the credit decision for a previously submitted application."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synchrony-quickscreen.get-application-decision"
-          with:
-            applicationId: "tools.applicationId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: authorize-purchase
-          description: "Authorize a retail credit purchase transaction on a Synchrony account."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-credit-auth.create-purchase"
-          with:
-            merchantId: "tools.merchantId"
-            accountNumber: "tools.accountNumber"
-            amount: "tools.amount"
-            channel: "tools.channel"
-            merchantOrderId: "tools.merchantOrderId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: create-preauthorization
-          description: "Place an authorization hold on a Synchrony credit account for future capture."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-credit-auth.create-preauthorization"
-          with:
-            merchantId: "tools.merchantId"
-            accountNumber: "tools.accountNumber"
-            amount: "tools.amount"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: process-payment
-          description: "Process a payment to reduce a customer's Synchrony credit balance."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-credit-auth.create-payment"
-          with:
-            merchantId: "tools.merchantId"
-            accountNumber: "tools.accountNumber"
-            amount: "tools.amount"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: process-refund
-          description: "Refund a prior Synchrony credit transaction to the customer's account."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synchrony-credit-auth.create-refund"
-          with:
-            merchantId: "tools.merchantId"
-            originalTransactionId: "tools.originalTransactionId"
-            amount: "tools.amount"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: reverse-transaction
-          description: "Void or reverse a prior Synchrony credit transaction before settlement."
-          hints:
-            readOnly: false
-            destructive: true
-            idempotent: true
-          call: "synchrony-credit-auth.create-reversal"
-          with:
-            merchantId: "tools.merchantId"
-            originalTransactionId: "tools.originalTransactionId"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: synchrony-retail-credit-api
+    description: Unified REST API for Synchrony retail credit operations.
+    resources:
+    - path: /v1/preapprovals
+      name: preapprovals
+      description: Soft-pull credit preapproval checks.
+      operations:
+      - method: POST
+        name: submit-preapproval
+        description: Run a Quickscreen preapproval to offer instant credit to a customer.
+        call: synchrony-quickscreen.submit-preapproval
+        with:
+          merchantId: rest.merchantId
+          firstName: rest.firstName
+          lastName: rest.lastName
+          zipCode: rest.zipCode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications
+      name: applications
+      description: Full credit card application submissions.
+      operations:
+      - method: POST
+        name: submit-application
+        description: Submit a full credit card application for instant decision.
+        call: synchrony-quickscreen.submit-application
+        with:
+          merchantId: rest.merchantId
+          offerId: rest.offerId
+          firstName: rest.firstName
+          lastName: rest.lastName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{applicationId}
+      name: application-decision
+      description: Credit application decisions.
+      operations:
+      - method: GET
+        name: get-application-decision
+        description: Retrieve the decision for a submitted credit application.
+        call: synchrony-quickscreen.get-application-decision
+        with:
+          applicationId: rest.applicationId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchases
+      name: purchases
+      description: Credit purchase authorizations.
+      operations:
+      - method: POST
+        name: create-purchase
+        description: Authorize a purchase transaction on a Synchrony credit account.
+        call: synchrony-credit-auth.create-purchase
+        with:
+          merchantId: rest.merchantId
+          accountNumber: rest.accountNumber
+          amount: rest.amount
+          channel: rest.channel
+          merchantOrderId: rest.merchantOrderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/preauthorizations
+      name: preauthorizations
+      description: Credit hold preauthorizations.
+      operations:
+      - method: POST
+        name: create-preauthorization
+        description: Place an authorization hold on a Synchrony credit account.
+        call: synchrony-credit-auth.create-preauthorization
+        with:
+          merchantId: rest.merchantId
+          accountNumber: rest.accountNumber
+          amount: rest.amount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/payments
+      name: payments
+      description: Credit account payments.
+      operations:
+      - method: POST
+        name: create-payment
+        description: Process a payment to a customer's Synchrony credit account.
+        call: synchrony-credit-auth.create-payment
+        with:
+          merchantId: rest.merchantId
+          accountNumber: rest.accountNumber
+          amount: rest.amount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/refunds
+      name: refunds
+      description: Credit transaction refunds.
+      operations:
+      - method: POST
+        name: create-refund
+        description: Process a refund to a customer's Synchrony credit account.
+        call: synchrony-credit-auth.create-refund
+        with:
+          merchantId: rest.merchantId
+          originalTransactionId: rest.originalTransactionId
+          amount: rest.amount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reversals
+      name: reversals
+      description: Transaction reversals and voids.
+      operations:
+      - method: POST
+        name: create-reversal
+        description: Reverse or void a prior Synchrony credit transaction.
+        call: synchrony-credit-auth.create-reversal
+        with:
+          merchantId: rest.merchantId
+          originalTransactionId: rest.originalTransactionId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: synchrony-retail-credit-mcp
+    transport: http
+    description: MCP server for AI-assisted retail credit management using Synchrony Financial APIs.
+    tools:
+    - name: submit-credit-preapproval
+      description: Run a soft-pull Quickscreen preapproval to instantly offer credit to a customer by name and address.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-quickscreen.submit-preapproval
+      with:
+        merchantId: tools.merchantId
+        firstName: tools.firstName
+        lastName: tools.lastName
+        zipCode: tools.zipCode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: submit-credit-application
+      description: Submit a full Synchrony credit card application for an instant credit decision.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-quickscreen.submit-application
+      with:
+        merchantId: tools.merchantId
+        offerId: tools.offerId
+        firstName: tools.firstName
+        lastName: tools.lastName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-application-decision
+      description: Retrieve the credit decision for a previously submitted application.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synchrony-quickscreen.get-application-decision
+      with:
+        applicationId: tools.applicationId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: authorize-purchase
+      description: Authorize a retail credit purchase transaction on a Synchrony account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-credit-auth.create-purchase
+      with:
+        merchantId: tools.merchantId
+        accountNumber: tools.accountNumber
+        amount: tools.amount
+        channel: tools.channel
+        merchantOrderId: tools.merchantOrderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-preauthorization
+      description: Place an authorization hold on a Synchrony credit account for future capture.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-credit-auth.create-preauthorization
+      with:
+        merchantId: tools.merchantId
+        accountNumber: tools.accountNumber
+        amount: tools.amount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: process-payment
+      description: Process a payment to reduce a customer's Synchrony credit balance.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-credit-auth.create-payment
+      with:
+        merchantId: tools.merchantId
+        accountNumber: tools.accountNumber
+        amount: tools.amount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: process-refund
+      description: Refund a prior Synchrony credit transaction to the customer's account.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synchrony-credit-auth.create-refund
+      with:
+        merchantId: tools.merchantId
+        originalTransactionId: tools.originalTransactionId
+        amount: tools.amount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reverse-transaction
+      description: Void or reverse a prior Synchrony credit transaction before settlement.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: synchrony-credit-auth.create-reversal
+      with:
+        merchantId: tools.merchantId
+        originalTransactionId: tools.originalTransactionId
+      outputParameters:
+      - type: object
+        mapping: $.
