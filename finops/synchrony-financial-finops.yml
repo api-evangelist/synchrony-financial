@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,142 +9,66 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Synchrony Financial
 providerId: synchrony-financial
-publisherName: Synchrony Financial
-serviceCategory: API
+publisherName: Synchrony Bank
+serviceCategory: Consumer Credit / Retail Finance
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Financial Services
   - Credit
   - Payments
-  - Consumer Finance
-  - Retail Finance
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Synchrony Financial API surface. Provides a FOCUS-aligned
-  mapping for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: Synchrony's APIs are program-attached (retail credit, Quickscreen, account management); revenue moves through retail-credit program economics rather than a per-call API invoice, so FinOps mapping aligns to program-level merchant settlement rather than usage telemetry.
+sources:
+  - https://developer.syf.com/
+  - https://www.synchrony.com
+notes: No FOCUS-aligned per-call billing surface. Cost/revenue is reconciled at the retail-credit program level (interchange, merchant servicing, promotional financing terms) by the merchant's finance team.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Program-Attached (Retail Credit)
+  billingFrequency: Per-Program Settlement
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Refund
 focusColumns:
-  ServiceName: Synchrony Financial
-  ServiceCategory: Developer Tools / API
+  ServiceName: Synchrony APIs
+  ServiceCategory: Consumer Credit / Retail Finance
   ProviderName: Synchrony Financial
-  PublisherName: Synchrony Financial
-  InvoiceIssuerName: Synchrony Financial
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Synchrony Bank
+  InvoiceIssuerName: Synchrony Bank
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
+  - name: credit_authorizations
+    description: Credit authorization transactions submitted through the Authorization API.
+    unit: transaction
+    aggregation: sum
+    dimensions:
+      - merchant
+      - channel
+  - name: quickscreen_decisions
+    description: Quickscreen preapproval decisions returned (soft credit pulls).
+    unit: decision
+    aggregation: sum
+    dimensions:
+      - merchant
+  - name: account_servicing_calls
+    description: Account-management API calls supporting cardholder servicing.
     unit: request
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Synchrony Credit Authorization API
-    baseURL: https://api.syf.com
-    tags:
-      - Credit Authorization
-      - Payments
-      - Purchases
-      - Refunds
-      - Retail Finance
-    serviceName: Synchrony Credit Authorization API
-    serviceCategory: API
-  - name: Synchrony Quickscreen Apply API
-    baseURL: https://api.syf.com
-    tags:
-      - Credit Application
-      - Preapproval
-      - Quickscreen
-      - Consumer Finance
-    serviceName: Synchrony Quickscreen Apply API
-    serviceCategory: API
-  - name: Synchrony Account Management API
-    baseURL: https://api.syf.com
-    tags:
-      - Account Management
-      - Consumer Finance
-      - Credit Cards
-    serviceName: Synchrony Account Management API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
-maintainers: []
+      - merchant
+principles:
+  - name: Visibility
+    description: Merchants reconcile API-driven activity against Synchrony program reporting; there is no FOCUS export, but transaction- and decision-level reports are available through partner reporting.
+  - name: Allocation
+    description: Allocate by merchant, channel (e-commerce / POS / mobile), and program; the natural unit is the credit program rather than a per-call line.
+  - name: Optimization
+    description: Optimize by routing eligible customers through Quickscreen first to reduce hard-pull costs, batching servicing calls, and tuning checkout flow to maximize approved authorization rates.
+  - name: Accountability
+    description: Merchant program owner and Synchrony partner-management team jointly own commercial reviews and program performance.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
