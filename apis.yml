@@ -88,6 +88,8 @@ common:
     url: json-ld/synchrony-financial-context.jsonld
   - type: Vocabulary
     url: vocabulary/synchrony-financial-vocabulary.yml
+  - type: Integrations
+    url: https://www.synchrony.com/marketplace
 features:
   - Credit Authorization
   - Preapproval Engine (Quickscreen)
