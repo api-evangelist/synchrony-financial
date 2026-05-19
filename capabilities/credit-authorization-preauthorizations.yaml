@@ -1,0 +1,123 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Synchrony Financial Credit Authorization API — Preauthorizations
+  description: 'Synchrony Financial Credit Authorization API — Preauthorizations. 2 operations. Lead operation: Complete Preauthorization.
+    Self-contained Naftiko capability covering one Synchrony Financial business surface.'
+  tags:
+  - Synchrony Financial
+  - Preauthorizations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SYNCHRONY_FINANCIAL_API_KEY: SYNCHRONY_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: credit-authorization-preauthorizations
+    baseUri: https://api.syf.com
+    description: Synchrony Financial Credit Authorization API — Preauthorizations business capability. Self-contained, no
+      shared references.
+    resources:
+    - name: v1-authorizations-completions
+      path: /v1/authorizations/completions
+      operations:
+      - name: createcompletion
+        method: POST
+        description: Complete Preauthorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-authorizations-preauthorizations
+      path: /v1/authorizations/preauthorizations
+      operations:
+      - name: createpreauthorization
+        method: POST
+        description: Create Preauthorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SYNCHRONY_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: credit-authorization-preauthorizations-rest
+    port: 8080
+    description: REST adapter for Synchrony Financial Credit Authorization API — Preauthorizations. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/authorizations/completions
+      name: v1-authorizations-completions
+      description: REST surface for v1-authorizations-completions.
+      operations:
+      - method: POST
+        name: createcompletion
+        description: Complete Preauthorization
+        call: credit-authorization-preauthorizations.createcompletion
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/authorizations/preauthorizations
+      name: v1-authorizations-preauthorizations
+      description: REST surface for v1-authorizations-preauthorizations.
+      operations:
+      - method: POST
+        name: createpreauthorization
+        description: Create Preauthorization
+        call: credit-authorization-preauthorizations.createpreauthorization
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: credit-authorization-preauthorizations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Synchrony Financial Credit Authorization API — Preauthorizations. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: complete-preauthorization
+      description: Complete Preauthorization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: credit-authorization-preauthorizations.createcompletion
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-preauthorization
+      description: Create Preauthorization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: credit-authorization-preauthorizations.createpreauthorization
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

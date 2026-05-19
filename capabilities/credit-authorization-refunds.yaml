@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Synchrony Financial Credit Authorization API — Refunds
+  description: 'Synchrony Financial Credit Authorization API — Refunds. 1 operations. Lead operation: Create Refund. Self-contained
+    Naftiko capability covering one Synchrony Financial business surface.'
+  tags:
+  - Synchrony Financial
+  - Refunds
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SYNCHRONY_FINANCIAL_API_KEY: SYNCHRONY_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: credit-authorization-refunds
+    baseUri: https://api.syf.com
+    description: Synchrony Financial Credit Authorization API — Refunds business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-authorizations-refunds
+      path: /v1/authorizations/refunds
+      operations:
+      - name: createrefund
+        method: POST
+        description: Create Refund
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SYNCHRONY_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: credit-authorization-refunds-rest
+    port: 8080
+    description: REST adapter for Synchrony Financial Credit Authorization API — Refunds. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/authorizations/refunds
+      name: v1-authorizations-refunds
+      description: REST surface for v1-authorizations-refunds.
+      operations:
+      - method: POST
+        name: createrefund
+        description: Create Refund
+        call: credit-authorization-refunds.createrefund
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: credit-authorization-refunds-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Synchrony Financial Credit Authorization API — Refunds. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: create-refund
+      description: Create Refund
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: credit-authorization-refunds.createrefund
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

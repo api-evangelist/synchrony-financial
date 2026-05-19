@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Synchrony Financial Quickscreen Apply API — Decisions
+  description: 'Synchrony Financial Quickscreen Apply API — Decisions. 1 operations. Lead operation: Get Application Decision.
+    Self-contained Naftiko capability covering one Synchrony Financial business surface.'
+  tags:
+  - Synchrony Financial
+  - Decisions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SYNCHRONY_FINANCIAL_API_KEY: SYNCHRONY_FINANCIAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quickscreen-apply-decisions
+    baseUri: https://api.syf.com
+    description: Synchrony Financial Quickscreen Apply API — Decisions business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-credit-applications-applicationId
+      path: /v1/credit/applications/{applicationId}
+      operations:
+      - name: getapplicationdecision
+        method: GET
+        description: Get Application Decision
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationId
+          in: path
+          type: string
+          description: The unique application identifier.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SYNCHRONY_FINANCIAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quickscreen-apply-decisions-rest
+    port: 8080
+    description: REST adapter for Synchrony Financial Quickscreen Apply API — Decisions. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/credit/applications/{applicationid}
+      name: v1-credit-applications-applicationid
+      description: REST surface for v1-credit-applications-applicationId.
+      operations:
+      - method: GET
+        name: getapplicationdecision
+        description: Get Application Decision
+        call: quickscreen-apply-decisions.getapplicationdecision
+        with:
+          applicationId: rest.applicationId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quickscreen-apply-decisions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Synchrony Financial Quickscreen Apply API — Decisions. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-application-decision
+      description: Get Application Decision
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quickscreen-apply-decisions.getapplicationdecision
+      with:
+        applicationId: tools.applicationId
+      outputParameters:
+      - type: object
+        mapping: $.
