@@ -1,87 +1,96 @@
-# Synchrony Financial
+# Synchrony Financial (synchrony-financial)
 
 Synchrony Financial is one of the nation's premier consumer financial services companies, providing a range of credit products through programs established with retailers, manufacturers, and merchants. Synchrony offers APIs enabling partners and retailers to integrate credit applications, authorizations, payments, loyalty, and account management into their digital commerce experiences.
 
-**Type:** Company (Fortune 500)
-**Developer Portal:** [developer.syf.com](https://developer.syf.com/)
-**Website:** [synchrony.com](https://www.synchrony.com)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml)
+
+## Tags
+
+- Financial Services
+- Credit
+- Payments
+- Consumer Finance
+- Retail Finance
+
+## Timestamps
+
+- **Created:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
-### Credit Authorization API
+### Synchrony Credit Authorization API
 
-The Synchrony Credit Authorization API allows merchants to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. Supports payment tokens and full account numbers across web, mobile, and point-of-sale channels.
+The Synchrony Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
 
-- **Documentation:** [developer.syf.com/our-products/credit-authorizations](https://developer.syf.com/our-products/credit-authorizations)
-- **OpenAPI:** [openapi/synchrony-financial-credit-authorization-openapi.yml](openapi/synchrony-financial-credit-authorization-openapi.yml)
+- **Human URL:** [https://developer.syf.com/our-products/credit-authorizations](https://developer.syf.com/our-products/credit-authorizations)
+- **Base URL:** `https://api.syf.com`
 
-| Method | Path | Summary |
-|--------|------|---------|
-| POST | /v1/authorizations/purchases | Create Purchase Authorization |
-| POST | /v1/authorizations/preauthorizations | Create Preauthorization |
-| POST | /v1/authorizations/completions | Complete Preauthorization |
-| POST | /v1/authorizations/payments | Submit Payment |
-| POST | /v1/authorizations/refunds | Create Refund |
-| POST | /v1/authorizations/reversals | Create Reversal |
+#### Tags
 
-### Quickscreen Apply API
+- Credit Authorization
+- Payments
+- Purchases
+- Refunds
+- Retail Finance
 
-Synchrony's Quickscreen preapproval engine offers instant credit decisions using only a customer's name and address via a soft credit check. The mApply feature enables mobile credit applications with instant decisions.
+#### Properties
 
-- **Documentation:** [developer.syf.com/our-products/quickscreen-apply](https://developer.syf.com/our-products/quickscreen-apply)
-- **OpenAPI:** [openapi/synchrony-financial-quickscreen-apply-openapi.yml](openapi/synchrony-financial-quickscreen-apply-openapi.yml)
+- [Documentation](https://developer.syf.com/our-products/credit-authorizations)
+- [OpenAPI](openapi/synchrony-financial-credit-authorization-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/synchrony-financial-credit-authorization.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synchrony-financial-credit-authorization.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| Method | Path | Summary |
-|--------|------|---------|
-| POST | /v1/credit/preapproval | Submit Preapproval Request |
-| POST | /v1/credit/applications | Submit Credit Application |
-| GET | /v1/credit/applications/{applicationId} | Get Application Decision |
+### Synchrony Quickscreen Apply API
 
-## Naftiko Capabilities
+Synchrony's Quickscreen API is a preapproval engine that allows merchants to offer instant credit decisions using only a customer's name and address. It runs a soft credit check and returns a real-time decision, enabling seamless credit offering within the shopping experience.
 
-### Shared Definitions
+- **Human URL:** [https://developer.syf.com/our-products/quickscreen-apply](https://developer.syf.com/our-products/quickscreen-apply)
+- **Base URL:** `https://api.syf.com`
 
-| File | Description |
-|------|-------------|
-| [capabilities/shared/credit-authorization.yaml](capabilities/shared/credit-authorization.yaml) | Credit Authorization API consumed definition |
-| [capabilities/shared/quickscreen-apply.yaml](capabilities/shared/quickscreen-apply.yaml) | Quickscreen Apply API consumed definition |
+#### Tags
 
-### Workflow Capabilities
+- Credit Application
+- Preapproval
+- Quickscreen
+- Consumer Finance
 
-| Capability | Description | Tools |
-|-----------|-------------|-------|
-| [retail-credit.yaml](capabilities/retail-credit.yaml) | Unified retail credit workflow combining preapproval, authorization, and payments | 8 tools |
+#### Properties
 
-## Artifacts
+- [Documentation](https://developer.syf.com/our-products/quickscreen-apply)
+- [OpenAPI](openapi/synchrony-financial-quickscreen-apply-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/synchrony-financial-quickscreen-apply.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synchrony-financial-quickscreen-apply.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| Type | File |
-|------|------|
-| OpenAPI | [openapi/synchrony-financial-credit-authorization-openapi.yml](openapi/synchrony-financial-credit-authorization-openapi.yml) |
-| OpenAPI | [openapi/synchrony-financial-quickscreen-apply-openapi.yml](openapi/synchrony-financial-quickscreen-apply-openapi.yml) |
-| Spectral Rules | [rules/synchrony-financial-rules.yml](rules/synchrony-financial-rules.yml) |
-| JSON Schema | [json-schema/synchrony-financial-transaction-schema.json](json-schema/synchrony-financial-transaction-schema.json) |
-| JSON Schema | [json-schema/synchrony-financial-credit-application-schema.json](json-schema/synchrony-financial-credit-application-schema.json) |
-| JSON Structure | [json-structure/synchrony-financial-transaction-structure.json](json-structure/synchrony-financial-transaction-structure.json) |
-| JSON-LD Context | [json-ld/synchrony-financial-context.jsonld](json-ld/synchrony-financial-context.jsonld) |
-| Vocabulary | [vocabulary/synchrony-financial-vocabulary.yml](vocabulary/synchrony-financial-vocabulary.yml) |
+### Synchrony Account Management API
 
-## Examples
+The Synchrony Account Management API provides access to cardholder account information, enabling partners to retrieve account details, balance information, transaction history, and manage account servicing operations on behalf of customers.
 
-| File | Description |
-|------|-------------|
-| [examples/synchrony-financial-credit-authorization-createPurchase-example.json](examples/synchrony-financial-credit-authorization-createPurchase-example.json) | Purchase authorization request/response |
-| [examples/synchrony-financial-quickscreen-apply-submitPreapproval-example.json](examples/synchrony-financial-quickscreen-apply-submitPreapproval-example.json) | Quickscreen preapproval request/response |
+- **Human URL:** [https://developer.syf.com/](https://developer.syf.com/)
+- **Base URL:** `https://api.syf.com`
 
-## Features
+#### Tags
 
-- Credit Authorization (Purchase, Preauth, Completion, Payment, Refund, Reversal)
-- Quickscreen Preapproval Engine (Soft Pull, No Credit Impact)
-- Mobile Credit Application (mApply)
-- Payment Token Support
-- Web, Mobile, and POS Channel Support
-- Sandbox Environment
+- Account Management
+- Consumer Finance
+- Credit Cards
 
-## Maintainers
+#### Properties
 
-**FN:** API Evangelist
-**Email:** info@apievangelist.com
+- [Documentation](https://developer.syf.com/)
+- [Postman Collection](collections/synchrony-financial-credit-authorization.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synchrony-financial-credit-authorization.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/synchrony-financial-quickscreen-apply.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synchrony-financial-quickscreen-apply.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [LinkedIn](https://www.linkedin.com/company/synchrony-financial)
+- [Website](https://www.synchrony.com)
+- [Developer Portal](https://developer.syf.com/)
+- [Portal Products](https://developer.syf.com/our-products)
+- [Terms of Service](https://developer.syf.com/terms-of-use)
+- [Sandbox](https://developer.syf.com/)
+- [J S O N L D Context](json-ld/synchrony-financial-context.jsonld)
+- [Vocabulary](vocabulary/synchrony-financial-vocabulary.yml)
+- [Integrations](https://www.synchrony.com/marketplace)

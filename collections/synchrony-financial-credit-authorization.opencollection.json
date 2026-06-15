@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Synchrony Financial Credit Authorization API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Purchases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Purchase Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/purchases",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a purchase transaction against a Synchrony credit account. Supports both payment token and full account number submission. Returns an authorization code upon approval."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Preauthorizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Preauthorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/preauthorizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Places an authorization hold on a customer's credit account for a specified amount. Use this for transactions where the final amount may differ from the initial hold, such as hotel or rental scenarios."
+        },
+        {
+          "info": {
+            "name": "Complete Preauthorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a prior preauthorization by capturing the final transaction amount. References the original preauthorization code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a payment to a customer's Synchrony credit account. Payments reduce the outstanding balance on the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/refunds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a refund to a customer's Synchrony credit account, crediting the specified amount back to the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reversals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Reversal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/reversals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Voids or reverses a prior transaction. Can be used to cancel purchases, preauthorizations, or payments before settlement."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

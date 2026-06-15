@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Synchrony Financial Quickscreen Apply API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preapprovals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Preapproval Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/credit/preapproval",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a soft-pull preapproval check using the customer's name and address. Returns a real-time preapproval decision without impacting the customer's credit score."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Credit Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/credit/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a full credit card application for a customer. The customer receives an instant decision and access to their credit line upon approval. Supports web and mobile (mApply) channels."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Decisions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Application Decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.syf.com/v1/credit/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique application identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the decision and status for a previously submitted credit application by its unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
