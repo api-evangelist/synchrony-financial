@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/synchrony-financial-credit-authorization-openapi.yml, openapi/synchrony-financial-quickscreen-apply-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/synchrony-financial-credit-authorization-openapi.yml
+  - openapi/synchrony-financial-quickscreen-apply-openapi.yml

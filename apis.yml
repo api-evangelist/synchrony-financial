@@ -68,6 +68,12 @@ apis:
       - type: Documentation
         url: https://developer.syf.com/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/synchrony-financial-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/synchrony-financial-domain-security.yml
+  - type: Authentication
+    url: authentication/synchrony-financial-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/synchrony-financial
   - type: Website
