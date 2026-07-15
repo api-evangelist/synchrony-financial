@@ -68,6 +68,8 @@ apis:
       - type: Documentation
         url: https://developer.syf.com/
 common:
+  - type: AgenticAccess
+    url: agentic-access/synchrony-financial-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/synchrony-financial-vulnerability-disclosure.yml
   - type: DomainSecurity
