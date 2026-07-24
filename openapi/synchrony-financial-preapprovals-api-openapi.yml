@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Credit Authorization Applications Preapprovals API
+  description: The Synchrony Financial Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/
+servers:
+- url: https://api.syf.com
+  description: Production
+- url: https://sandbox.api.syf.com
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Preapprovals
+  description: Soft-pull preapproval operations.
+paths:
+  /v1/credit/preapproval:
+    post:
+      operationId: submitPreapproval
+      summary: Submit Preapproval Request
+      description: Submits a soft-pull preapproval check using the customer's name and address. Returns a real-time preapproval decision without impacting the customer's credit score.
+      tags:
+      - Preapprovals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreapprovalRequest'
+      responses:
+        '200':
+          description: Preapproval decision returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreapprovalResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    PreapprovalResponse:
+      type: object
+      properties:
+        offerId:
+          type: string
+          description: Unique offer identifier for conversion to application.
+        decision:
+          type: string
+          enum:
+          - preapproved
+          - not_preapproved
+        creditLimit:
+          type: number
+          format: float
+          description: Estimated credit limit if preapproved.
+        expiresAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+    PreapprovalRequest:
+      type: object
+      required:
+      - merchantId
+      - firstName
+      - lastName
+      - address
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        channel:
+          type: string
+          enum:
+          - web
+          - mobile
+          - pos
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: US
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

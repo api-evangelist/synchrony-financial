@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Credit Authorization Applications Reversals API
+  description: The Synchrony Financial Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/
+servers:
+- url: https://api.syf.com
+  description: Production
+- url: https://sandbox.api.syf.com
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Reversals
+  description: Reverse and void transactions.
+paths:
+  /v1/authorizations/reversals:
+    post:
+      operationId: createReversal
+      summary: Create Reversal
+      description: Voids or reverses a prior transaction. Can be used to cancel purchases, preauthorizations, or payments before settlement.
+      tags:
+      - Reversals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReversalRequest'
+      responses:
+        '200':
+          description: Reversal processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+components:
+  schemas:
+    ReversalRequest:
+      type: object
+      required:
+      - merchantId
+      - originalTransactionId
+      properties:
+        merchantId:
+          type: string
+        originalTransactionId:
+          type: string
+        amount:
+          type: number
+          format: float
+    AuthorizationResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier for the transaction.
+        authorizationCode:
+          type: string
+          description: Authorization code returned on approval.
+        status:
+          type: string
+          enum:
+          - approved
+          - declined
+          - pending
+        amount:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number.
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+          description: Human-readable status message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

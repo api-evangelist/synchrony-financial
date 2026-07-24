@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Credit Authorization Applications Preauthorizations API
+  description: The Synchrony Financial Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/
+servers:
+- url: https://api.syf.com
+  description: Production
+- url: https://sandbox.api.syf.com
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Preauthorizations
+  description: Place holds on credit for future purchase completions.
+paths:
+  /v1/authorizations/preauthorizations:
+    post:
+      operationId: createPreauthorization
+      summary: Create Preauthorization
+      description: Places an authorization hold on a customer's credit account for a specified amount. Use this for transactions where the final amount may differ from the initial hold, such as hotel or rental scenarios.
+      tags:
+      - Preauthorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreauthorizationRequest'
+      responses:
+        '200':
+          description: Preauthorization approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+        '422':
+          description: Transaction declined
+  /v1/authorizations/completions:
+    post:
+      operationId: createCompletion
+      summary: Complete Preauthorization
+      description: Completes a prior preauthorization by capturing the final transaction amount. References the original preauthorization code.
+      tags:
+      - Preauthorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+      responses:
+        '200':
+          description: Completion successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+components:
+  schemas:
+    PreauthorizationRequest:
+      type: object
+      required:
+      - merchantId
+      - amount
+      - accountNumber
+      properties:
+        merchantId:
+          type: string
+        accountNumber:
+          type: string
+        amount:
+          type: number
+          format: float
+        merchantOrderId:
+          type: string
+    AuthorizationResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier for the transaction.
+        authorizationCode:
+          type: string
+          description: Authorization code returned on approval.
+        status:
+          type: string
+          enum:
+          - approved
+          - declined
+          - pending
+        amount:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number.
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+          description: Human-readable status message.
+    CompletionRequest:
+      type: object
+      required:
+      - merchantId
+      - authorizationCode
+      - amount
+      properties:
+        merchantId:
+          type: string
+        authorizationCode:
+          type: string
+          description: Original preauthorization code.
+        amount:
+          type: number
+          format: float
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

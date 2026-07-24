@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Credit Authorization Applications Decisions API
+  description: The Synchrony Financial Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/
+servers:
+- url: https://api.syf.com
+  description: Production
+- url: https://sandbox.api.syf.com
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Decisions
+  description: Retrieve application decisions.
+paths:
+  /v1/credit/applications/{applicationId}:
+    get:
+      operationId: getApplicationDecision
+      summary: Get Application Decision
+      description: Retrieves the decision and status for a previously submitted credit application by its unique identifier.
+      tags:
+      - Decisions
+      parameters:
+      - name: applicationId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique application identifier.
+      responses:
+        '200':
+          description: Application decision retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '404':
+          description: Application not found
+components:
+  schemas:
+    ApplicationResponse:
+      type: object
+      properties:
+        applicationId:
+          type: string
+        decision:
+          type: string
+          enum:
+          - approved
+          - declined
+          - pending
+        creditLimit:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number on approval.
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
