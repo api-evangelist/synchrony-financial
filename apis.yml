@@ -1,4 +1,18 @@
 aid: synchrony-financial
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/synchrony-financial.png
 name: Synchrony Financial
 description: >-
   Synchrony Financial is one of the nation's premier consumer financial services companies, providing a range of credit
@@ -15,58 +29,133 @@ tags:
   - Consumer Finance
   - Retail Finance
 apis:
-  - aid: synchrony-financial:credit-authorization
-    name: Synchrony Credit Authorization API
-    description: >-
-      The Synchrony Credit Authorization API allows merchants and retailers to perform credit card transactions
-      including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports
-      transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
-    humanURL: https://developer.syf.com/our-products/credit-authorizations
-    baseURL: https://api.syf.com
-    tags:
-      - Credit Authorization
-      - Payments
-      - Purchases
-      - Refunds
-      - Retail Finance
-    properties:
-      - type: Documentation
-        url: https://developer.syf.com/our-products/credit-authorizations
-      - type: OpenAPI
-        url: openapi/synchrony-financial-credit-authorization-openapi.yml
-  - aid: synchrony-financial:quickscreen-apply
-    name: Synchrony Quickscreen Apply API
-    description: >-
-      Synchrony's Quickscreen API is a preapproval engine that allows merchants to offer instant credit decisions using
-      only a customer's name and address. It runs a soft credit check and returns a real-time decision, enabling
-      seamless credit offering within the shopping experience.
-    humanURL: https://developer.syf.com/our-products/quickscreen-apply
-    baseURL: https://api.syf.com
-    tags:
-      - Credit Application
-      - Preapproval
-      - Quickscreen
-      - Consumer Finance
-    properties:
-      - type: Documentation
-        url: https://developer.syf.com/our-products/quickscreen-apply
-      - type: OpenAPI
-        url: openapi/synchrony-financial-quickscreen-apply-openapi.yml
-  - aid: synchrony-financial:account-management
-    name: Synchrony Account Management API
-    description: >-
-      The Synchrony Account Management API provides access to cardholder account information, enabling partners to
-      retrieve account details, balance information, transaction history, and manage account servicing operations on
-      behalf of customers.
-    humanURL: https://developer.syf.com/
-    baseURL: https://api.syf.com
-    tags:
-      - Account Management
-      - Consumer Finance
-      - Credit Cards
-    properties:
-      - type: Documentation
-        url: https://developer.syf.com/
+- aid: synchrony-financial:account-management
+  name: Synchrony Account Management API
+  description: >-
+    The Synchrony Account Management API provides access to cardholder account information, enabling partners
+    to retrieve account details, balance information, transaction history, and manage account servicing
+    operations on behalf of customers.
+  humanURL: https://developer.syf.com/
+  baseURL: https://api.syf.com
+  tags:
+  - Account Management
+  - Consumer Finance
+  - Credit Cards
+  properties:
+  - type: Documentation
+    url: https://developer.syf.com/
+- aid: synchrony-financial:synchrony-financial-applications-api
+  name: Synchrony Financial Applications API
+  description: Full credit card application submissions.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-applications-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-decisions-api
+  name: Synchrony Financial Decisions API
+  description: Retrieve application decisions.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Decisions
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-decisions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-payments-api
+  name: Synchrony Financial Payments API
+  description: Process customer account payments.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-preapprovals-api
+  name: Synchrony Financial Preapprovals API
+  description: Soft-pull preapproval operations.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Preapprovals
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-preapprovals-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-preauthorizations-api
+  name: Synchrony Financial Preauthorizations API
+  description: Place holds on credit for future purchase completions.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Preauthorizations
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-preauthorizations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-purchases-api
+  name: Synchrony Financial Purchases API
+  description: Authorize and capture purchase transactions.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Purchases
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-purchases-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-refunds-api
+  name: Synchrony Financial Refunds API
+  description: Process refunds and credit adjustments.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
+- aid: synchrony-financial:synchrony-financial-reversals-api
+  name: Synchrony Financial Reversals API
+  description: Reverse and void transactions.
+  humanURL: https://developer.syf.com/our-products/credit-authorizations
+  baseURL: https://api.syf.com
+  tags:
+  - Reversals
+  properties:
+  - type: OpenAPI
+    url: openapi/synchrony-financial-reversals-api-openapi.yml
+  - type: Documentation
+    url: https://developer.syf.com/our-products/credit-authorizations
+  - type: Documentation
+    url: https://developer.syf.com/our-products/quickscreen-apply
 common:
   - type: AgenticAccess
     url: agentic-access/synchrony-financial-agentic-access.yml
