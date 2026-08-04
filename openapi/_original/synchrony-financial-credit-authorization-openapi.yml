@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Credit Authorization API
+  description: >-
+    The Synchrony Financial Credit Authorization API allows merchants and retailers
+    to perform credit card transactions including purchases, preauthorizations,
+    completions, payments, refunds, and reversals. The API supports transactions
+    via payment tokens or full account numbers across web, mobile, and
+    point-of-sale channels.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/
+servers:
+  - url: https://api.syf.com
+    description: Production
+  - url: https://sandbox.api.syf.com
+    description: Sandbox
+security:
+  - bearerAuth: []
+tags:
+  - name: Purchases
+    description: Authorize and capture purchase transactions.
+  - name: Preauthorizations
+    description: Place holds on credit for future purchase completions.
+  - name: Payments
+    description: Process customer account payments.
+  - name: Refunds
+    description: Process refunds and credit adjustments.
+  - name: Reversals
+    description: Reverse and void transactions.
+paths:
+  /v1/authorizations/purchases:
+    post:
+      operationId: createPurchase
+      summary: Create Purchase Authorization
+      description: >-
+        Initiates a purchase transaction against a Synchrony credit account.
+        Supports both payment token and full account number submission. Returns
+        an authorization code upon approval.
+      tags:
+        - Purchases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseRequest'
+      responses:
+        '200':
+          description: Transaction approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Transaction declined
+  /v1/authorizations/preauthorizations:
+    post:
+      operationId: createPreauthorization
+      summary: Create Preauthorization
+      description: >-
+        Places an authorization hold on a customer's credit account for a
+        specified amount. Use this for transactions where the final amount
+        may differ from the initial hold, such as hotel or rental scenarios.
+      tags:
+        - Preauthorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreauthorizationRequest'
+      responses:
+        '200':
+          description: Preauthorization approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+        '422':
+          description: Transaction declined
+  /v1/authorizations/completions:
+    post:
+      operationId: createCompletion
+      summary: Complete Preauthorization
+      description: >-
+        Completes a prior preauthorization by capturing the final transaction
+        amount. References the original preauthorization code.
+      tags:
+        - Preauthorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+      responses:
+        '200':
+          description: Completion successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+  /v1/authorizations/payments:
+    post:
+      operationId: createPayment
+      summary: Submit Payment
+      description: >-
+        Processes a payment to a customer's Synchrony credit account.
+        Payments reduce the outstanding balance on the account.
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '200':
+          description: Payment processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+  /v1/authorizations/refunds:
+    post:
+      operationId: createRefund
+      summary: Create Refund
+      description: >-
+        Processes a refund to a customer's Synchrony credit account,
+        crediting the specified amount back to the account.
+      tags:
+        - Refunds
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Refund processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+  /v1/authorizations/reversals:
+    post:
+      operationId: createReversal
+      summary: Create Reversal
+      description: >-
+        Voids or reverses a prior transaction. Can be used to cancel
+        purchases, preauthorizations, or payments before settlement.
+      tags:
+        - Reversals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReversalRequest'
+      responses:
+        '200':
+          description: Reversal processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    PurchaseRequest:
+      type: object
+      required:
+        - merchantId
+        - amount
+        - accountNumber
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        accountNumber:
+          type: string
+          description: Customer's credit account number or payment token.
+        amount:
+          type: number
+          format: float
+          description: Transaction amount in dollars.
+        channel:
+          type: string
+          enum: [web, mobile, pos]
+          description: The transaction channel.
+        merchantOrderId:
+          type: string
+          description: Merchant's internal order reference.
+    PreauthorizationRequest:
+      type: object
+      required:
+        - merchantId
+        - amount
+        - accountNumber
+      properties:
+        merchantId:
+          type: string
+        accountNumber:
+          type: string
+        amount:
+          type: number
+          format: float
+        merchantOrderId:
+          type: string
+    CompletionRequest:
+      type: object
+      required:
+        - merchantId
+        - authorizationCode
+        - amount
+      properties:
+        merchantId:
+          type: string
+        authorizationCode:
+          type: string
+          description: Original preauthorization code.
+        amount:
+          type: number
+          format: float
+    PaymentRequest:
+      type: object
+      required:
+        - merchantId
+        - accountNumber
+        - amount
+      properties:
+        merchantId:
+          type: string
+        accountNumber:
+          type: string
+        amount:
+          type: number
+          format: float
+    RefundRequest:
+      type: object
+      required:
+        - merchantId
+        - originalTransactionId
+        - amount
+      properties:
+        merchantId:
+          type: string
+        originalTransactionId:
+          type: string
+        amount:
+          type: number
+          format: float
+    ReversalRequest:
+      type: object
+      required:
+        - merchantId
+        - originalTransactionId
+      properties:
+        merchantId:
+          type: string
+        originalTransactionId:
+          type: string
+        amount:
+          type: number
+          format: float
+    AuthorizationResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier for the transaction.
+        authorizationCode:
+          type: string
+          description: Authorization code returned on approval.
+        status:
+          type: string
+          enum: [approved, declined, pending]
+        amount:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number.
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+          description: Human-readable status message.

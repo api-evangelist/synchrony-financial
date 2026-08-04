@@ -1,0 +1,28 @@
+{
+  "provider": "synchrony-financial",
+  "sources": [
+    "synchrony-financial-applications-api-openapi.yml",
+    "synchrony-financial-decisions-api-openapi.yml",
+    "synchrony-financial-payments-api-openapi.yml",
+    "synchrony-financial-preapprovals-api-openapi.yml",
+    "synchrony-financial-preauthorizations-api-openapi.yml",
+    "synchrony-financial-purchases-api-openapi.yml",
+    "synchrony-financial-refunds-api-openapi.yml",
+    "synchrony-financial-reversals-api-openapi.yml"
+  ],
+  "outputs": [
+    "synchrony-financial-applications-api-openapi.yml",
+    "synchrony-financial-decisions-api-openapi.yml",
+    "synchrony-financial-payments-api-openapi.yml",
+    "synchrony-financial-preapprovals-api-openapi.yml",
+    "synchrony-financial-preauthorizations-api-openapi.yml",
+    "synchrony-financial-purchases-api-openapi.yml",
+    "synchrony-financial-refunds-api-openapi.yml",
+    "synchrony-financial-reversals-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

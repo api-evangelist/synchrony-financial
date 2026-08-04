@@ -1,0 +1,220 @@
+openapi: 3.1.0
+info:
+  title: Synchrony Financial Quickscreen Apply API
+  description: >-
+    The Synchrony Financial Quickscreen Apply API is a preapproval engine that
+    allows merchants to offer instant credit decisions using only a customer's
+    name and address. It runs a soft credit check and returns a real-time
+    decision, enabling seamless credit offering within the shopping experience.
+    The mApply feature allows customers to securely apply for credit on mobile
+    devices and instantly access their approved credit line.
+  version: '1.0'
+  contact:
+    url: https://developer.syf.com/our-products/quickscreen-apply
+servers:
+  - url: https://api.syf.com
+    description: Production
+  - url: https://sandbox.api.syf.com
+    description: Sandbox
+security:
+  - bearerAuth: []
+tags:
+  - name: Preapprovals
+    description: Soft-pull preapproval operations.
+  - name: Applications
+    description: Full credit card application submissions.
+  - name: Decisions
+    description: Retrieve application decisions.
+paths:
+  /v1/credit/preapproval:
+    post:
+      operationId: submitPreapproval
+      summary: Submit Preapproval Request
+      description: >-
+        Submits a soft-pull preapproval check using the customer's name and
+        address. Returns a real-time preapproval decision without impacting
+        the customer's credit score.
+      tags:
+        - Preapprovals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreapprovalRequest'
+      responses:
+        '200':
+          description: Preapproval decision returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreapprovalResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+  /v1/credit/applications:
+    post:
+      operationId: submitApplication
+      summary: Submit Credit Application
+      description: >-
+        Submits a full credit card application for a customer. The customer
+        receives an instant decision and access to their credit line upon
+        approval. Supports web and mobile (mApply) channels.
+      tags:
+        - Applications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditApplication'
+      responses:
+        '201':
+          description: Application submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          description: Bad request
+        '422':
+          description: Application declined
+  /v1/credit/applications/{applicationId}:
+    get:
+      operationId: getApplicationDecision
+      summary: Get Application Decision
+      description: >-
+        Retrieves the decision and status for a previously submitted credit
+        application by its unique identifier.
+      tags:
+        - Decisions
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique application identifier.
+      responses:
+        '200':
+          description: Application decision retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '404':
+          description: Application not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    PreapprovalRequest:
+      type: object
+      required:
+        - merchantId
+        - firstName
+        - lastName
+        - address
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        channel:
+          type: string
+          enum: [web, mobile, pos]
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: US
+    PreapprovalResponse:
+      type: object
+      properties:
+        offerId:
+          type: string
+          description: Unique offer identifier for conversion to application.
+        decision:
+          type: string
+          enum: [preapproved, not_preapproved]
+        creditLimit:
+          type: number
+          format: float
+          description: Estimated credit limit if preapproved.
+        expiresAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+    CreditApplication:
+      type: object
+      required:
+        - merchantId
+        - firstName
+        - lastName
+        - dateOfBirth
+        - ssn
+        - address
+        - email
+      properties:
+        merchantId:
+          type: string
+        offerId:
+          type: string
+          description: Pre-filled from Quickscreen offer if available.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        ssn:
+          type: string
+          description: Social Security Number (encrypted).
+        address:
+          $ref: '#/components/schemas/Address'
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        channel:
+          type: string
+          enum: [web, mobile]
+    ApplicationResponse:
+      type: object
+      properties:
+        applicationId:
+          type: string
+        decision:
+          type: string
+          enum: [approved, declined, pending]
+        creditLimit:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number on approval.
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
