@@ -157,6 +157,14 @@ apis:
   - type: Documentation
     url: https://developer.syf.com/our-products/quickscreen-apply
 common:
+  - type: Blog
+    url: https://www.synchrony.com/blog
+  - type: Support
+    url: https://www.synchrony.com/help/faqs
+  - type: Security
+    url: https://www.synchrony.com/s/vulnerability-disclosure
+  - type: PrivacyPolicy
+    url: https://www.synchrony.com/legal/privacy-policy
   - type: AgenticAccess
     url: agentic-access/synchrony-financial-agentic-access.yml
   - type: VulnerabilityDisclosure
