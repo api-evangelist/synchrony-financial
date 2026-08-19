@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Synchrony Financial Credit Authorization Applications Preauthorizations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preauthorizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Preauthorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/preauthorizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Places an authorization hold on a customer's credit account for a specified amount. Use this for transactions where the final amount may differ from the initial hold, such as hotel or rental scenarios."
+        },
+        {
+          "info": {
+            "name": "Complete Preauthorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a prior preauthorization by capturing the final transaction amount. References the original preauthorization code."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

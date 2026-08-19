@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Synchrony Financial Credit Authorization Applications Preapprovals API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Preapprovals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit Preapproval Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/credit/preapproval",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a soft-pull preapproval check using the customer's name and address. Returns a real-time preapproval decision without impacting the customer's credit score."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

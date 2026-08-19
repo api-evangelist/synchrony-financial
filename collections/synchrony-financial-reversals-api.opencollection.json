@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Synchrony Financial Credit Authorization Applications Reversals API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reversals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Reversal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.syf.com/v1/authorizations/reversals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Voids or reverses a prior transaction. Can be used to cancel purchases, preauthorizations, or payments before settlement."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
