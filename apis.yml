@@ -36,6 +36,12 @@ url: https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/h
 created: '2026-05-03'
 modified: '2026-05-19'
 tags:
+  - Financial-Services
+  - Credit
+  - Payments
+  - Consumer Finance
+  - Retail Finance
+tags_raw:
   - Financial Services
   - Credit
   - Payments
@@ -63,6 +69,8 @@ apis:
   humanURL: https://developer.syf.com/our-products/credit-authorizations
   baseURL: https://api.syf.com
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
