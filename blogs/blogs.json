@@ -1,0 +1,14 @@
+{
+  "repo": "synchrony-financial",
+  "feeds": [
+    {
+      "source": "https://developer.syf.com/our-products/quickscreen-apply",
+      "feed_url": "https://developer.syf.com/our-products/quickscreen-apply",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-22T20:20:02Z"
+}
