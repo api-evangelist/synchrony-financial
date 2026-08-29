@@ -178,6 +178,9 @@ apis:
   - type: Documentation
     url: https://developer.syf.com/our-products/quickscreen-apply
 common:
+  - type: CapabilityMap
+    url: capabilities/synchrony-financial-capability-edges.yml
+    name: Synchrony Financial Business Capability Map
   - type: Blog
     url: https://www.synchrony.com/blog
   - type: Support

@@ -1,0 +1,86 @@
+slug: synchrony-financial
+provider: Synchrony Financial
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: Applications
+  spec_file: synchrony-financial-applications-api-openapi.yml
+  capability_id: BC-1320.10
+  capability_id_l1: BC-1320
+  capability_name: Credit Origination Management
+  confidence: 0.95
+  evidence: 'POST /v1/credit/applications submitApplication — Submit Credit Application; schemas: CreditApplication,
+    ApplicationResponse'
+  reason: Consumer credit application intake submitted by merchants — squarely credit origination.
+- tag: Preauthorizations
+  spec_file: synchrony-financial-preauthorizations-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.9
+  evidence: POST /v1/authorizations/preauthorizations  createPreauthorization; POST /v1/authorizations/completions  createCompletion  Complete
+    Preauthorization
+  reason: Card authorisation and completion processing — card transaction processing.
+- tag: Purchases
+  spec_file: synchrony-financial-purchases-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.9
+  evidence: POST /v1/authorizations/purchases  createPurchase  Create Purchase Authorization
+  reason: Credit card purchase authorisation — card transaction authorisation processing.
+- tag: Decisions
+  spec_file: synchrony-financial-decisions-api-openapi.yml
+  capability_id: BC-1320.20
+  capability_id_l1: BC-1320
+  capability_name: Credit Underwriting & Decisioning Management
+  confidence: 0.85
+  evidence: GET /v1/credit/applications/{applicationId} getApplicationDecision — Get Application Decision
+  reason: Retrieves the underwriting decision on a submitted credit application; credit decisioning. Slight
+    ambiguity between origination and decisioning sub-capability as it is a read of the decision outcome.
+- tag: Refunds
+  spec_file: synchrony-financial-refunds-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: POST /v1/authorizations/refunds  createRefund  Create Refund
+  reason: Card refund transaction handled within the card authorisation flow — card transaction processing.
+- tag: Reversals
+  spec_file: synchrony-financial-reversals-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: POST /v1/authorizations/reversals  createReversal  Create Reversal
+  reason: Reversal of a card authorisation — card transaction processing.
+- tag: Payments
+  spec_file: synchrony-financial-payments-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.8
+  evidence: POST /v1/authorizations/payments  createPayment  Submit Payment; 'perform credit card transactions
+    including purchases, preauthorizations, completions, payments, refunds, and reversals'
+  reason: Card payment transaction submitted through the credit authorization API; card transaction processing
+    (authorisation) is the closest fit.
+- tag: Preapprovals
+  spec_file: synchrony-financial-preapprovals-api-openapi.yml
+  capability_id: BC-1320.10
+  capability_id_l1: BC-1320
+  capability_name: Credit Origination Management
+  confidence: 0.75
+  evidence: POST /v1/credit/preapproval  submitPreapproval  Submit Preapproval Request; schemas PreapprovalRequest,
+    Address
+  reason: Consumer credit pre-approval request intake at point of sale — credit origination/pre-screening
+    rather than card transaction processing.
