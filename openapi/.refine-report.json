@@ -1,28 +1,36 @@
 {
   "provider": "synchrony-financial",
   "sources": [
-    "synchrony-financial-applications-api-openapi.yml",
-    "synchrony-financial-decisions-api-openapi.yml",
-    "synchrony-financial-payments-api-openapi.yml",
-    "synchrony-financial-preapprovals-api-openapi.yml",
-    "synchrony-financial-preauthorizations-api-openapi.yml",
-    "synchrony-financial-purchases-api-openapi.yml",
-    "synchrony-financial-refunds-api-openapi.yml",
-    "synchrony-financial-reversals-api-openapi.yml"
+    "_original/synchrony-financial-credit-authorization-openapi.yml",
+    "_original/synchrony-financial-quickscreen-apply-openapi.yml"
   ],
   "outputs": [
-    "synchrony-financial-applications-api-openapi.yml",
-    "synchrony-financial-decisions-api-openapi.yml",
     "synchrony-financial-payments-api-openapi.yml",
-    "synchrony-financial-preapprovals-api-openapi.yml",
     "synchrony-financial-preauthorizations-api-openapi.yml",
     "synchrony-financial-purchases-api-openapi.yml",
     "synchrony-financial-refunds-api-openapi.yml",
-    "synchrony-financial-reversals-api-openapi.yml"
+    "synchrony-financial-reversals-api-openapi.yml",
+    "synchrony-financial-applications-api-openapi.yml",
+    "synchrony-financial-decisions-api-openapi.yml",
+    "synchrony-financial-preapprovals-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "synchrony-financial-credit-authorization-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "synchrony-financial-quickscreen-apply-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "synchrony-financial-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-decisions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-preapprovals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-preauthorizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-purchases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-refunds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synchrony-financial-reversals-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
