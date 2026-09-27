@@ -42,29 +42,6 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    PreapprovalRequest:
-      type: object
-      required:
-      - merchantId
-      - firstName
-      - lastName
-      - address
-      properties:
-        merchantId:
-          type: string
-          description: The merchant's Synchrony identifier.
-        firstName:
-          type: string
-        lastName:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        channel:
-          type: string
-          enum:
-          - web
-          - mobile
-          - pos
     PreapprovalResponse:
       type: object
       properties:
@@ -99,6 +76,29 @@ components:
         country:
           type: string
           default: US
+    PreapprovalRequest:
+      type: object
+      required:
+      - merchantId
+      - firstName
+      - lastName
+      - address
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        channel:
+          type: string
+          enum:
+          - web
+          - mobile
+          - pos
   securitySchemes:
     bearerAuth:
       type: http

@@ -37,7 +37,7 @@ url: https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/h
 created: '2026-05-03'
 modified: '2026-05-19'
 tags:
-  - Financial-Services
+  - Financial Services
   - Credit
   - Payments
   - Consumer Finance
@@ -48,6 +48,7 @@ tags_raw:
   - Payments
   - Consumer Finance
   - Retail Finance
+  - Financial-Services
 apis:
 - aid: synchrony-financial:account-management
   name: Synchrony Account Management API

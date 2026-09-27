@@ -64,6 +64,21 @@ paths:
           description: Bad request
 components:
   schemas:
+    CompletionRequest:
+      type: object
+      required:
+      - merchantId
+      - authorizationCode
+      - amount
+      properties:
+        merchantId:
+          type: string
+        authorizationCode:
+          type: string
+          description: Original preauthorization code.
+        amount:
+          type: number
+          format: float
     PreauthorizationRequest:
       type: object
       required:
@@ -80,21 +95,6 @@ components:
           format: float
         merchantOrderId:
           type: string
-    CompletionRequest:
-      type: object
-      required:
-      - merchantId
-      - authorizationCode
-      - amount
-      properties:
-        merchantId:
-          type: string
-        authorizationCode:
-          type: string
-          description: Original preauthorization code.
-        amount:
-          type: number
-          format: float
     AuthorizationResponse:
       type: object
       properties:
