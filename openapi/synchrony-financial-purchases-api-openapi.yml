@@ -44,33 +44,6 @@ paths:
           description: Transaction declined
 components:
   schemas:
-    PurchaseRequest:
-      type: object
-      required:
-      - merchantId
-      - amount
-      - accountNumber
-      properties:
-        merchantId:
-          type: string
-          description: The merchant's Synchrony identifier.
-        accountNumber:
-          type: string
-          description: Customer's credit account number or payment token.
-        amount:
-          type: number
-          format: float
-          description: Transaction amount in dollars.
-        channel:
-          type: string
-          enum:
-          - web
-          - mobile
-          - pos
-          description: The transaction channel.
-        merchantOrderId:
-          type: string
-          description: Merchant's internal order reference.
     AuthorizationResponse:
       type: object
       properties:
@@ -98,6 +71,33 @@ components:
         message:
           type: string
           description: Human-readable status message.
+    PurchaseRequest:
+      type: object
+      required:
+      - merchantId
+      - amount
+      - accountNumber
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        accountNumber:
+          type: string
+          description: Customer's credit account number or payment token.
+        amount:
+          type: number
+          format: float
+          description: Transaction amount in dollars.
+        channel:
+          type: string
+          enum:
+          - web
+          - mobile
+          - pos
+          description: The transaction channel.
+        merchantOrderId:
+          type: string
+          description: Merchant's internal order reference.
   securitySchemes:
     bearerAuth:
       type: http

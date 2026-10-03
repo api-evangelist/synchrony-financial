@@ -42,6 +42,20 @@ paths:
           description: Application declined
 components:
   schemas:
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: US
     CreditApplication:
       type: object
       required:
@@ -102,20 +116,6 @@ components:
         timestamp:
           type: string
           format: date-time
-    Address:
-      type: object
-      properties:
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipCode:
-          type: string
-        country:
-          type: string
-          default: US
   securitySchemes:
     bearerAuth:
       type: http
