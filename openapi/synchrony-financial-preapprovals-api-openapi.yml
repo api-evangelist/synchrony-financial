@@ -42,6 +42,29 @@ paths:
           description: Unauthorized
 components:
   schemas:
+    PreapprovalRequest:
+      type: object
+      required:
+      - merchantId
+      - firstName
+      - lastName
+      - address
+      properties:
+        merchantId:
+          type: string
+          description: The merchant's Synchrony identifier.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        channel:
+          type: string
+          enum:
+          - web
+          - mobile
+          - pos
     Address:
       type: object
       properties:
@@ -76,29 +99,6 @@ components:
           format: date-time
         message:
           type: string
-    PreapprovalRequest:
-      type: object
-      required:
-      - merchantId
-      - firstName
-      - lastName
-      - address
-      properties:
-        merchantId:
-          type: string
-          description: The merchant's Synchrony identifier.
-        firstName:
-          type: string
-        lastName:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-        channel:
-          type: string
-          enum:
-          - web
-          - mobile
-          - pos
   securitySchemes:
     bearerAuth:
       type: http

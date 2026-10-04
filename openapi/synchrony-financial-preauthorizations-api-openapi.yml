@@ -64,33 +64,6 @@ paths:
           description: Bad request
 components:
   schemas:
-    AuthorizationResponse:
-      type: object
-      properties:
-        transactionId:
-          type: string
-          description: Unique identifier for the transaction.
-        authorizationCode:
-          type: string
-          description: Authorization code returned on approval.
-        status:
-          type: string
-          enum:
-          - approved
-          - declined
-          - pending
-        amount:
-          type: number
-          format: float
-        accountNumber:
-          type: string
-          description: Masked account number.
-        timestamp:
-          type: string
-          format: date-time
-        message:
-          type: string
-          description: Human-readable status message.
     PreauthorizationRequest:
       type: object
       required:
@@ -122,6 +95,33 @@ components:
         amount:
           type: number
           format: float
+    AuthorizationResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier for the transaction.
+        authorizationCode:
+          type: string
+          description: Authorization code returned on approval.
+        status:
+          type: string
+          enum:
+          - approved
+          - declined
+          - pending
+        amount:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number.
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+          description: Human-readable status message.
   securitySchemes:
     bearerAuth:
       type: http

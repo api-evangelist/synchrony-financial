@@ -40,6 +40,20 @@ paths:
           description: Bad request
 components:
   schemas:
+    PaymentRequest:
+      type: object
+      required:
+      - merchantId
+      - accountNumber
+      - amount
+      properties:
+        merchantId:
+          type: string
+        accountNumber:
+          type: string
+        amount:
+          type: number
+          format: float
     AuthorizationResponse:
       type: object
       properties:
@@ -67,20 +81,6 @@ components:
         message:
           type: string
           description: Human-readable status message.
-    PaymentRequest:
-      type: object
-      required:
-      - merchantId
-      - accountNumber
-      - amount
-      properties:
-        merchantId:
-          type: string
-        accountNumber:
-          type: string
-        amount:
-          type: number
-          format: float
   securitySchemes:
     bearerAuth:
       type: http
