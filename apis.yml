@@ -180,6 +180,12 @@ apis:
   - type: Documentation
     url: https://developer.syf.com/our-products/quickscreen-apply
 common:
+  - type: Plans
+    url: plans/synchrony-financial-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/synchrony-financial-rate-limits.yml
+  - type: FinOps
+    url: finops/synchrony-financial-finops.yml
   - type: CapabilityMap
     url: capabilities/synchrony-financial-capability-edges.yml
     name: Synchrony Financial Business Capability Map
