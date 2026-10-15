@@ -11,6 +11,7 @@ checked:
 - https://monid.ai/tools/synchrony-financial
 - https://n8n.io/integrations/synchrony-financial/
 - https://zapier.com/apps/synchrony-financial/integrations
+- shopify/integrations/shopify-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -32,4 +33,20 @@ edges:
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
   category: SALON_SPA
+- partner_name: Shopify (own)
+  partner: shopify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://apps.shopify.com/synchrony-marketing
+  mirror_of: shopify/integrations/shopify-integration-edges.yml
+  apps:
+  - Synchrony On‑Site Messaging
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
 templates: []
