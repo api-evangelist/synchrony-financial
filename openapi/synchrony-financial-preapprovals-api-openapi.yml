@@ -42,6 +42,20 @@ paths:
           description: Unauthorized
 components:
   schemas:
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+          default: US
     PreapprovalRequest:
       type: object
       required:
@@ -65,20 +79,6 @@ components:
           - web
           - mobile
           - pos
-    Address:
-      type: object
-      properties:
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipCode:
-          type: string
-        country:
-          type: string
-          default: US
     PreapprovalResponse:
       type: object
       properties:

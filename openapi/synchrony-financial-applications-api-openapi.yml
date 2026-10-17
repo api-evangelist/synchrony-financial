@@ -42,6 +42,28 @@ paths:
           description: Application declined
 components:
   schemas:
+    ApplicationResponse:
+      type: object
+      properties:
+        applicationId:
+          type: string
+        decision:
+          type: string
+          enum:
+          - approved
+          - declined
+          - pending
+        creditLimit:
+          type: number
+          format: float
+        accountNumber:
+          type: string
+          description: Masked account number on approval.
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
     Address:
       type: object
       properties:
@@ -94,28 +116,6 @@ components:
           enum:
           - web
           - mobile
-    ApplicationResponse:
-      type: object
-      properties:
-        applicationId:
-          type: string
-        decision:
-          type: string
-          enum:
-          - approved
-          - declined
-          - pending
-        creditLimit:
-          type: number
-          format: float
-        accountNumber:
-          type: string
-          description: Masked account number on approval.
-        message:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
   securitySchemes:
     bearerAuth:
       type: http
