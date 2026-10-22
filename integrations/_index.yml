@@ -28,3 +28,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: synchrony-financial-adobe-commerce-own
+  label: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_name: Adobe Commerce (own)
+  category: Adobe Commerce Marketplace extension
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://commercemarketplace.adobe.com/synchrony-digital-buy-magento2-module.html
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

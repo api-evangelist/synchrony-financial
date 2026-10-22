@@ -12,6 +12,7 @@ checked:
 - https://n8n.io/integrations/synchrony-financial/
 - https://zapier.com/apps/synchrony-financial/integrations
 - shopify/integrations/shopify-integration-edges.yml
+- adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -49,4 +50,21 @@ edges:
   listing_count: 1
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://commercemarketplace.adobe.com/synchrony-digital-buy-magento2-module.html
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+  apps:
+  - Synchrony
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Commerce Marketplace extension
 templates: []
