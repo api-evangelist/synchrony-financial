@@ -1,4 +1,4 @@
-# Synchrony Financial (synchrony-financial)
+# Synchrony Financial
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,95 +66,176 @@
 
 Synchrony Financial is one of the nation's premier consumer financial services companies, providing a range of credit products through programs established with retailers, manufacturers, and merchants. Synchrony offers APIs enabling partners and retailers to integrate credit applications, authorizations, payments, loyalty, and account management into their digital commerce experiences.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/synchrony-financial/refs/heads/main/apis.yml)
+**Areas:** Financial Services · Credit · Payments · Consumer Finance · Retail Finance
 
-## Tags
+## Synchrony Financial on APIs.io
 
-- Financial Services
-- Credit
-- Payments
-- Consumer Finance
-- Retail Finance
+Everything profiled for Synchrony Financial is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/synchrony-financial/](https://apis.io/providers/synchrony-financial/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (9)
 
-- **Created:** 2026-05-03
-- **Modified:** 2026-05-19
+- [Synchrony Account Management API](https://apis.io/apis/synchrony-financial/account-management/) — The Synchrony Account Management API provides access to cardholder account information, enabling partners to retrieve account details, balance information,…
+- [Synchrony Financial Applications API](https://apis.io/apis/synchrony-financial/synchrony-financial-applications-api/) — Full credit card application submissions.
+- [Synchrony Financial Decisions API](https://apis.io/apis/synchrony-financial/synchrony-financial-decisions-api/) — Retrieve application decisions.
+- [Synchrony Financial Payments API](https://apis.io/apis/synchrony-financial/synchrony-financial-payments-api/) — Process customer account payments.
+- [Synchrony Financial Preapprovals API](https://apis.io/apis/synchrony-financial/synchrony-financial-preapprovals-api/) — Soft-pull preapproval operations.
+- [Synchrony Financial Preauthorizations API](https://apis.io/apis/synchrony-financial/synchrony-financial-preauthorizations-api/) — Place holds on credit for future purchase completions.
+- [Synchrony Financial Purchases API](https://apis.io/apis/synchrony-financial/synchrony-financial-purchases-api/) — Authorize and capture purchase transactions.
+- [Synchrony Financial Refunds API](https://apis.io/apis/synchrony-financial/synchrony-financial-refunds-api/) — Process refunds and credit adjustments.
+- [Synchrony Financial Reversals API](https://apis.io/apis/synchrony-financial/synchrony-financial-reversals-api/) — Reverse and void transactions.
 
-## APIs
+### Published properties
 
-### Synchrony Credit Authorization API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Synchrony Credit Authorization API allows merchants and retailers to perform credit card transactions including purchases, preauthorizations, completions, payments, refunds, and reversals. The API supports transactions via payment tokens or full account numbers across web, mobile, and point-of-sale channels.
+#### Agentic access (1)
 
-- **Human URL:** [https://developer.syf.com/our-products/credit-authorizations](https://developer.syf.com/our-products/credit-authorizations)
-- **Base URL:** `https://api.syf.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Synchrony Financial Agentic Access](https://apis.io/agentic-access/synchrony-financial/synchrony-financial-agentic-access/)
 
-- Credit Authorization
-- Payments
-- Purchases
-- Refunds
-- Retail Finance
+#### JSON Schema (2)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://developer.syf.com/our-products/credit-authorizations)
-- [OpenAPI](openapi/synchrony-financial-credit-authorization-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/synchrony-financial-credit-authorization.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/synchrony-financial-credit-authorization.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Credit Application](https://apis.io/schemas/synchrony-financial/synchrony-financial-credit-application/)
+- [Transaction](https://apis.io/schemas/synchrony-financial/synchrony-financial-transaction/)
 
-### Synchrony Quickscreen Apply API
+#### JSON Structure (1)
 
-Synchrony's Quickscreen API is a preapproval engine that allows merchants to offer instant credit decisions using only a customer's name and address. It runs a soft credit check and returns a real-time decision, enabling seamless credit offering within the shopping experience.
+Data models expressed in JSON Structure.
 
-- **Human URL:** [https://developer.syf.com/our-products/quickscreen-apply](https://developer.syf.com/our-products/quickscreen-apply)
-- **Base URL:** `https://api.syf.com`
+- [Synchrony Financial Transaction Structure](https://apis.io/json-structure/synchrony-financial/synchrony-financial-transaction-structure/)
 
-#### Tags
+#### JSON-LD (1)
 
-- Credit Application
-- Preapproval
-- Quickscreen
-- Consumer Finance
+Linked-data contexts for the provider's vocabulary.
 
-#### Properties
+- [Synchrony Financial Context](https://apis.io/jsonld/synchrony-financial/synchrony-financial-context/)
 
-- [Documentation](https://developer.syf.com/our-products/quickscreen-apply)
-- [OpenAPI](openapi/synchrony-financial-quickscreen-apply-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/synchrony-financial-quickscreen-apply.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/synchrony-financial-quickscreen-apply.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Vocabulary (1)
 
-### Synchrony Account Management API
+The provider's domain terms, defined.
 
-The Synchrony Account Management API provides access to cardholder account information, enabling partners to retrieve account details, balance information, transaction history, and manage account servicing operations on behalf of customers.
+- [Synchrony Financial API Vocabulary](https://apis.io/vocabularies/synchrony-financial/synchrony-financial-vocabulary/)
 
-- **Human URL:** [https://developer.syf.com/](https://developer.syf.com/)
-- **Base URL:** `https://api.syf.com`
+#### Examples (2)
 
-#### Tags
+Example requests and responses.
 
-- Account Management
-- Consumer Finance
-- Credit Cards
+- [Synchrony Financial Credit Authorization Createpurchase Example](https://apis.io/examples/synchrony-financial/synchrony-financial-credit-authorization-createPurchase-example/)
+- [Synchrony Financial Quickscreen Apply Submitpreapproval Example](https://apis.io/examples/synchrony-financial/synchrony-financial-quickscreen-apply-submitPreapproval-example/)
 
-#### Properties
+#### Collections (10)
 
-- [Documentation](https://developer.syf.com/)
-- [Postman Collection](collections/synchrony-financial-credit-authorization.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/synchrony-financial-credit-authorization.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/synchrony-financial-quickscreen-apply.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/synchrony-financial-quickscreen-apply.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-## Common Properties
+- [Synchrony Financial Credit Authorization Applications API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-applications-api/)
+- [Synchrony Financial Credit Authorization API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-credit-authorization/)
+- [Synchrony Financial Credit Authorization Applications Decisions API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-decisions-api/)
+- [Synchrony Financial Credit Authorization Applications Payments API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-payments-api/)
+- [Synchrony Financial Credit Authorization Applications Preapprovals API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-preapprovals-api/)
+- [Synchrony Financial Credit Authorization Applications Preauthorizations API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-preauthorizations-api/)
+- [Synchrony Financial Credit Authorization Applications Purchases API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-purchases-api/)
+- [Synchrony Financial Quickscreen Apply API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-quickscreen-apply/)
+- [Synchrony Financial Credit Authorization Applications Refunds API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-refunds-api/)
+- [Synchrony Financial Credit Authorization Applications Reversals API](https://apis.io/collections/synchrony-financial/open-synchrony-financial-reversals-api/)
 
-- [LinkedIn](https://www.linkedin.com/company/synchrony-financial)
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Synchrony Financial — jsonschema rules](https://apis.io/rules/synchrony-financial/synchrony-financial-jsonschema-spectral-rules/)
+- [Synchrony Financial API Rules](https://apis.io/rules/synchrony-financial/synchrony-financial-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Synchrony Financial Authentication](https://apis.io/security/synchrony-financial/synchrony-financial-authentication/)
+- [Synchrony Financial Domain Security](https://apis.io/security/synchrony-financial/synchrony-financial-domain-security/)
+- [Synchrony Financial Vulnerability Disclosure](https://apis.io/security/synchrony-financial/synchrony-financial-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Synchrony Financial Plans Pricing](https://apis.io/plans/synchrony-financial/synchrony-financial-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Synchrony Financial Rate Limits](https://apis.io/rate-limits/synchrony-financial/synchrony-financial-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Synchrony Financial Finops](https://apis.io/finops/synchrony-financial/synchrony-financial-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.synchrony.com)
-- [Developer Portal](https://developer.syf.com/)
-- [Portal Products](https://developer.syf.com/our-products)
-- [Terms of Service](https://developer.syf.com/terms-of-use)
-- [Sandbox](https://developer.syf.com/)
-- [J S O N L D Context](json-ld/synchrony-financial-context.jsonld)
-- [Vocabulary](vocabulary/synchrony-financial-vocabulary.yml)
-- [Integrations](https://www.synchrony.com/marketplace)
+- [Support](https://www.synchrony.com/help/faqs)
+- [Blog](https://www.synchrony.com/blog)
+- [Security](https://www.synchrony.com/s/vulnerability-disclosure)
+- [Terms of service](https://developer.syf.com/terms-of-use)
+- [Privacy policy](https://www.synchrony.com/legal/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 40.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 56.9 |
+| Contract governance | 27.3 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 45.2 |
+| Access clarity | 26.3 |
+
+**Agent readiness 21.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/synchrony-financial/](https://apis.io/providers/synchrony-financial/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Synchrony Financial: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/synchrony-financial/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
